@@ -35,6 +35,12 @@ The dataset is not included in this repository. See `data_instructions.md`.
 - ROC-AUC
 - Average precision
 
+- ## Project Workflow
+
+The following diagram summarizes the complete industrial anomaly-detection pipeline:
+
+![Industrial Anomaly Detection Pipeline](figures/anomaly_detection_pipeline.png)
+
 ## Repository Structure
 
 ```text
