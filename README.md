@@ -8,6 +8,10 @@ a convolutional autoencoder on the MVTec AD bottle category.
 The objective is to learn normal industrial appearance using defect-free
 training images and identify anomalous test images using reconstruction error.
 
+## Project Workflow
+
+![Industrial anomaly detection workflow](figures/industrial-anomaly-detection-overview.png)
+
 ## Dataset
 
 The project uses the MVTec AD bottle category.
