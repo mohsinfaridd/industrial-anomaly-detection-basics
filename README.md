@@ -80,12 +80,11 @@ The model correctly classified all 20 normal images but missed 28 of the
 
 ### Score Distribution
 
-![Score Distribution](figures/score_distribution_autoencoder.png)
+![Score Distribution](figures/anomaly_score_distribution.png)
 
 ### Anomaly Heatmaps
 
-![Anomaly Heatmaps](figures/anomaly_heatmaps_autoencoder.png)
-
+![Anomaly Heatmaps](figures/anomaly_heatmaps.png)
 ## Main Finding
 
 The model is conservative. It produced no false alarms on the normal test
