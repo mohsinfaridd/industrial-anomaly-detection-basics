@@ -91,6 +91,41 @@ The model is conservative. It produced no false alarms on the normal test
 images, but anomaly recall was only 55.56%. Contamination was the most difficult
 defect type.
 
+## Why Accuracy Is Currently 66.27%
+
+The model correctly classified all 20 normal test images but detected only
+35 of 63 anomalous images. Therefore, 28 anomalous samples were classified
+as normal.
+
+The model is conservative because the anomaly threshold was selected using
+the 0.99 quantile of normal validation scores. This produced zero false
+positives but reduced anomaly recall to 55.56%.
+
+Additional limitations include the small convolutional autoencoder,
+128 × 128 input resolution, top-1% error aggregation, limited normal training
+data, and the difficulty of reconstructing subtle contamination defects.
+
+## Planned Improvements
+
+- Compare threshold quantiles 0.95, 0.975, and 0.99.
+- Increase input resolution to 224 and 256 pixels.
+- Compare maximum, mean, top-1%, and top-5% anomaly scores.
+- Evaluate L1, MSE, SSIM, and perceptual reconstruction losses.
+- Run the pretrained ResNet-18 feature baseline.
+- Add full PaDiM and PatchCore implementations.
+- Repeat experiments using at least three random seeds.
+- Evaluate additional MVTec AD categories.
+
+## Future Research Directions
+
+- Self-supervised Vision Transformer representations
+- Multi-class defect recognition
+- Improved anomaly localization
+- Uncertainty-aware inspection with human review
+- Cross-dataset evaluation
+- Edge-device deployment
+- Agentic AI for automated experiment planning and critique
+
 ## Repository Structure
 
 ```text
