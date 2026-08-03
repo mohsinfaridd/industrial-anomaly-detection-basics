@@ -1,49 +1,100 @@
-# Industrial Anomaly Detection Basics
+# Industrial Image Anomaly Detection Basics
 
-## Project Overview
+A reproducible normal-only industrial image anomaly-detection project using
+a convolutional autoencoder on the MVTec AD bottle category.
 
-This project studies normal-only industrial image anomaly detection using
-reconstruction-based and pretrained-feature approaches.
+## Project Objective
 
-## Objectives
-
-- Understand normal-only training
-- Detect anomalous industrial images
-- Localize defects using anomaly heatmaps
-- Compare reconstruction and feature-based methods
-- Evaluate class-balanced performance
-
-## Methods
-
-1. Convolutional Autoencoder
-2. Pretrained ResNet-18 Feature Distribution Baseline
+The objective is to learn normal industrial appearance using defect-free
+training images and identify anomalous test images using reconstruction error.
 
 ## Dataset
 
-The project uses an MVTec-style dataset.
+The project uses the MVTec AD bottle category.
 
-The dataset is not included in this repository. See `data_instructions.md`.
+- Training-normal images: 167
+- Validation-normal images: 42
+- Test images: 83
+- Normal test images: 20
+- Anomalous test images: 63
+- Ground-truth anomaly masks: 63
 
-## Evaluation Metrics
+The dataset itself is not included in this repository.
 
-- Accuracy
-- Balanced accuracy
-- Anomaly precision
-- Anomaly recall
-- Normal recall
-- Macro-F1
-- ROC-AUC
-- Average precision
+## Current Method
 
-- ## Project Workflow
+A convolutional autoencoder was trained using only normal images.
 
-The following diagram summarizes the complete industrial anomaly-detection pipeline:
+The anomaly map is calculated from channel-averaged squared reconstruction
+error. The image anomaly score is obtained from the highest 1% of anomaly-map
+pixels.
 
-![Industrial Anomaly Detection Pipeline](figures/anomaly_detection_pipeline.png)
+The decision threshold was selected from held-out normal validation images
+using the 0.99 quantile. Test labels were not used for threshold selection.
+
+## Current Results
+
+| Metric | Result |
+|---|---:|
+| Accuracy | 0.6627 |
+| Balanced accuracy | 0.7778 |
+| Anomaly precision | 1.0000 |
+| Anomaly recall | 0.5556 |
+| Normal recall | 1.0000 |
+| Anomaly F1 | 0.7143 |
+| Macro-F1 | 0.6513 |
+| Image ROC-AUC | 0.7714 |
+| Average precision | 0.9322 |
+| Pixel ROC-AUC | 0.7235 |
+| Pixel average precision | 0.1582 |
+
+## Confusion Matrix
+
+The model correctly classified all 20 normal images but missed 28 of the
+63 anomalous images.
+
+![Confusion Matrix](figures/confusion_matrix_autoencoder.png)
+
+## Defect-Specific Detection
+
+| Defect type | Detection rate |
+|---|---:|
+| Broken small | 72.73% |
+| Broken large | 65.00% |
+| Contamination | 28.57% |
+| Good-image false-positive rate | 0.00% |
+
+## Visual Results
+
+### Training Loss
+
+![Training Loss](figures/autoencoder_training_loss.png)
+
+### ROC Curve
+
+![ROC Curve](figures/roc_curve_autoencoder.png)
+
+### Precision-Recall Curve
+
+![Precision-Recall Curve](figures/precision_recall_curve_autoencoder.png)
+
+### Score Distribution
+
+![Score Distribution](figures/score_distribution_autoencoder.png)
+
+### Anomaly Heatmaps
+
+![Anomaly Heatmaps](figures/anomaly_heatmaps_autoencoder.png)
+
+## Main Finding
+
+The model is conservative. It produced no false alarms on the normal test
+images, but anomaly recall was only 55.56%. Contamination was the most difficult
+defect type.
 
 ## Repository Structure
 
 ```text
-notebooks/   Jupyter notebook
-figures/     Confusion matrices, curves and anomaly maps
-results/     Metrics and experiment summaries
+notebooks/   Executed Kaggle notebook
+figures/     Training and evaluation plots
+results/     Metrics, predictions, and experiment configuration
